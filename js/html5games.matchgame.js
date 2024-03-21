@@ -154,7 +154,7 @@ function selectCard() {
 	{
 		setTimeout(checkPattern,700);
 	}
-	alert("SELECT CARD");
+	console.log("SELECT CARD");
 }
 
 // a function to return random number between -0.5 to 0.5
