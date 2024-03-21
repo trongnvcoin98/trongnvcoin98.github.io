@@ -1,137 +1,121 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<style>
-canvas {
-    border:1px solid #d3d3d3;
-    background-color: #f1f1f1;
-}
-</style>
-</head>
-<body onload="startGame()">
-<script>
+  
+  <head>
+    <script type="text/javascript">
+      // Global variables.
+      var ballX = 150; // Ball x position.
+      var ballY = 150; // Ball y position.
+      var ballDX = 2; // Change in ball x position.
+      var ballDY = 4; // Change in ball y position.
+      var boardX = 300; // Board width.
+      var boardY = 300; // Board height.
+      var paddleX = 150; // Initial paddle location.
+      var paddleH = 10; // Paddle height.
+      var paddleD = boardY - paddleH; // Paddle depth.
+      var paddleW = 150; // Paddle width.
+      var canvas; // Canvas element.
+      var ctx; // Canvas context.
+      var gameLoop; // Game loop time interval.
+      // This function is called on page load.
 
-var myGamePiece;
-var myObstacles = [];
-var myScore;
 
-function startGame() {
-    myGamePiece = new component(30, 30, "red", 10, 120);
-    myGamePiece.gravity = 0.05;
-    myScore = new component("30px", "Consolas", "black", 280, 40, "text");
-    myGameArea.start();
-}
+      function drawGameCanvas() {
 
-var myGameArea = {
-    canvas : document.createElement("canvas"),
-    start : function() {
-        this.canvas.width = 480;
-        this.canvas.height = 270;
-        this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.frameNo = 0;
-        this.interval = setInterval(updateGameArea, 20);
-        },
-    clear : function() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-}
+        // Get the canvas element.
+        canvas = document.getElementById("gameBoard");
 
-function component(width, height, color, x, y, type) {
-    this.type = type;
-    this.score = 0;
-    this.width = width;
-    this.height = height;
-    this.speedX = 0;
-    this.speedY = 0;    
-    this.x = x;
-    this.y = y;
-    this.gravity = 0;
-    this.gravitySpeed = 0;
-    this.update = function() {
-        ctx = myGameArea.context;
-        if (this.type == "text") {
-            ctx.font = this.width + " " + this.height;
-            ctx.fillStyle = color;
-            ctx.fillText(this.text, this.x, this.y);
-        } else {
-            ctx.fillStyle = color;
-            ctx.fillRect(this.x, this.y, this.width, this.height);
+        // Make sure you got it.
+        if (canvas.getContext) {
+          // Specify 2d canvas type.
+          ctx = canvas.getContext("2d");
+
+          // Play the game until the ball stops.
+          gameLoop = setInterval(drawBall, 16);
+
+          // Add keyboard listener.
+          window.addEventListener('keydown', whatKey, true);
+
         }
-    }
-    this.newPos = function() {
-        this.gravitySpeed += this.gravity;
-        this.x += this.speedX;
-        this.y += this.speedY + this.gravitySpeed;
-        this.hitBottom();
-    }
-    this.hitBottom = function() {
-        var rockbottom = myGameArea.canvas.height - this.height;
-        if (this.y > rockbottom) {
-            this.y = rockbottom;
-            this.gravitySpeed = 0;
+      }
+
+      function drawBall() {
+
+        // Clear the board.
+        ctx.clearRect(0, 0, boardX, boardY);
+
+        // Fill the board.
+        ctx.fillStyle = "thistle";
+        ctx.beginPath();
+        ctx.rect(0, 0, boardX, boardY);
+        ctx.closePath();
+        ctx.fill();
+
+        // Draw a ball.
+        ctx.fillStyle = "tomato";
+        ctx.beginPath();
+        ctx.arc(ballX, ballY, 15, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.fill();
+
+        // Draw the paddle.
+        ctx.fillStyle = "navy";
+        ctx.beginPath();
+        ctx.rect(paddleX, paddleD, paddleW, paddleH);
+        ctx.closePath();
+        ctx.fill();
+
+        // Change the ball location.
+        ballX += ballDX;
+        ballY += ballDY;
+
+        // Bounce on a left or right edge.
+        if (ballX + ballDX > boardX - 15 || ballX + ballDX < 15) ballDX = -ballDX;
+
+        // If ball hits the top, bounce it. 
+        if (ballY + ballDY < 15) ballDY = -ballDY;
+        // If the ball hits the bottom, check see if it hits a paddle.
+        else if (ballY + ballDY > boardY - 15) {
+          // If the ball hits the paddle, bounce it.
+          if (ballX > paddleX && ballX < paddleX + paddleW) ballDY = -ballDY;
+          // Otherwise the game is over.
+          else {
+            clearInterval(gameLoop);
+            alert("Game over!");
+          }
         }
-    }
-    this.crashWith = function(otherobj) {
-        var myleft = this.x;
-        var myright = this.x + (this.width);
-        var mytop = this.y;
-        var mybottom = this.y + (this.height);
-        var otherleft = otherobj.x;
-        var otherright = otherobj.x + (otherobj.width);
-        var othertop = otherobj.y;
-        var otherbottom = otherobj.y + (otherobj.height);
-        var crash = true;
-        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
-            crash = false;
+      }
+
+      // Get key press.
+
+
+      function whatKey(evt) {
+
+        switch (evt.keyCode) {
+          // Left arrow.
+        case 37:
+          paddleX = paddleX - 20;
+          if (paddleX < 0) paddleX = 0;
+          break;
+
+          // Right arrow.
+        case 39:
+          paddleX = paddleX + 20;
+          if (paddleX > boardX - paddleW) paddleX = boardX - paddleW;
+          break;
         }
-        return crash;
-    }
-}
+      }
+    </script>
+  </head>
+  
+  <body onload="drawGameCanvas()">
+    <h1>
+      Canvas Racquetball
+    </h1>
+    <div>
+      <canvas id="gameBoard" width="300" height="300">
+      </canvas>
+    </div>
+  </body>
 
-function updateGameArea() {
-    var x, height, gap, minHeight, maxHeight, minGap, maxGap;
-    for (i = 0; i < myObstacles.length; i += 1) {
-        if (myGamePiece.crashWith(myObstacles[i])) {
-            return;
-        } 
-    }
-    myGameArea.clear();
-    myGameArea.frameNo += 1;
-    if (myGameArea.frameNo == 1 || everyinterval(150)) {
-        x = myGameArea.canvas.width;
-        minHeight = 20;
-        maxHeight = 200;
-        height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
-        minGap = 50;
-        maxGap = 200;
-        gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
-        myObstacles.push(new component(10, height, "green", x, 0));
-        myObstacles.push(new component(10, x - height - gap, "green", x, height + gap));
-    }
-    for (i = 0; i < myObstacles.length; i += 1) {
-        myObstacles[i].x += -1;
-        myObstacles[i].update();
-    }
-    myScore.text="SCORE: " + myGameArea.frameNo;
-    myScore.update();
-    myGamePiece.newPos();
-    myGamePiece.update();
-}
-
-function everyinterval(n) {
-    if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
-    return false;
-}
-
-function accelerate(n) {
-    myGamePiece.gravity = n;
-}
-</script>
-<br>
-<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
-<p>Use the ACCELERATE button to stay in the air</p>
-<p>How long can you stay alive?</p>
-</body>
 </html>
