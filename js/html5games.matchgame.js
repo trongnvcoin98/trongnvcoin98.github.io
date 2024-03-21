@@ -85,6 +85,8 @@ $(function(){
 		// listen the click event on each card DIV element.
 		$(this).click(selectCard);				
 	});
+
+	$("#replayBtn").click(replay);
 	
 	// removed cards that were removed in savedObject.
 	if (savedObject != undefined)
@@ -274,6 +276,10 @@ function gameover()
 	
 	// at last, we clear the saved savingObject
 	localStorage.removeItem("savingObject");
+}
+
+function replay() {
+	alert('replay click')
 }
 
 /**
