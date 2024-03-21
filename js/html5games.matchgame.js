@@ -279,7 +279,7 @@ function gameover()
 }
 
 function replay() {
-	$("#popup").addClass("hide");
+	// $("#popup").addClass("hide");
 	startGame();
 }
 
