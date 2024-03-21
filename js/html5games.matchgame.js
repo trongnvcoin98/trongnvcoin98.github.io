@@ -279,7 +279,7 @@ function gameover()
 }
 
 function replay() {
-	alert('replay click')
+	alert("REPLAY CLICK");
 }
 
 /**
