@@ -38,7 +38,10 @@ matchingGame.deck = [
 	'cardBJ', 'cardBJ',	
 ];
 
-function startGame() {
+// every code inside $(function(){}) will be run 
+// after the DOM is loaded and ready.
+
+$(function(){
 	// shuffling the deck
 	matchingGame.deck.sort(shuffle);
 
@@ -104,14 +107,6 @@ function startGame() {
 
 	// start the timer
 	matchingGame.timer = setInterval(countTimer, 1000);
-}
-
-// every code inside $(function(){}) will be run 
-// after the DOM is loaded and ready.
-
-
-$(function(){	
-	startGame()
 });
 
 // execute every second to count the elapsed time
@@ -280,7 +275,7 @@ function gameover()
 
 function replay() {
 	// $("#popup").addClass("hide");
-	startGame();
+	console.log("REPLAY CLICK");
 }
 
 /**
