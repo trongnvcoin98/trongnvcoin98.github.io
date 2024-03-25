@@ -200,6 +200,11 @@
         throw Error('PaymentFormDataInvalid');
       }
       postEvent('payment_form_submit', false, formData);
+    },
+    gameOver: function() {
+      postEvent('game_over', function(err) {
+        console.log("SEND GAME OVER TO TELE ERROR: ", err);
+      });
     }
   };
 
