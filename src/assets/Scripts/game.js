@@ -179,6 +179,7 @@
     initParams: initParams,
     receiveEvent: receiveEvent,
     onEvent: onEvent,
+    postEvent: postEvent,
     shareScore: function () {
       postEvent('share_score', function (error) {
         if (error) {
@@ -202,7 +203,7 @@
       postEvent('payment_form_submit', false, formData);
     },
     gameOver: function() {
-      postEvent('game_over', function(err) {
+      postEvent('web_app_close', function(err) {
         console.log("SEND GAME OVER TO TELE ERROR: ", err);
       });
     }
