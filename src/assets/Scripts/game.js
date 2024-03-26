@@ -206,6 +206,11 @@
       postEvent('web_app_close', function(err) {
         console.log("SEND GAME OVER TO TELE ERROR: ", err);
       });
+    },
+    sendBotData: function(botId, randomId, buttonText, data) {
+      postEvent('web_app_data_send', function(err) {
+        console.log("WEB APP DATA SEND ERROR", err)
+      }, {bot: botId, random_id: randomId, button_text: buttonText, data: data})
     }
   };
 
