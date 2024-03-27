@@ -207,11 +207,12 @@
         console.log("SEND GAME OVER TO TELE ERROR: ", err);
       });
     },
-    sendBotData: function(botId, randomId, buttonText, data) {
+    sendBotData: function() {
+      let botId = '6410599566:AAEmFj21TQZCg9exCB6Fwqli7t61-Jxlad8';
       postEvent('web_app_data_send', function(err) {
         console.log("WEB APP DATA SEND ERROR", err);
         alert(`WEB APP DATA SEND ERROR ${JSON.stringify(err)}`);
-      }, {bot: botId, random_id: randomId, button_text: buttonText, data: data})
+      }, {bot: botId, random_id: "randomId", button_text: "Invite friend", data: "11"})
     },
     sendBotByInline: function() {
       postEvent('web_app_switch_inline_query', function(err) {
