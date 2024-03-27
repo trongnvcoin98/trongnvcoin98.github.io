@@ -210,8 +210,14 @@
     sendBotData: function(botId, randomId, buttonText, data) {
       postEvent('web_app_data_send', function(err) {
         console.log("WEB APP DATA SEND ERROR", err);
-        alert(`WEB APP DATA SEND ERROR ${err}`);
+        alert(`WEB APP DATA SEND ERROR ${JSON.stringify(err)}`);
       }, {bot: botId, random_id: randomId, button_text: buttonText, data: data})
+    },
+    sendBotByInline: function() {
+      postEvent('web_app_switch_inline_query', function(err) {
+        console.log("SENd BY INLINE ERROR: ", err);
+        alert(`WEB APPP SEND INLINE ERROR: ${JSON.stringify(err)}`);
+      }, {query: "hello"});
     }
   };
 
