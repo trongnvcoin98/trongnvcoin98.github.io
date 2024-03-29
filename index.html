@@ -2,7 +2,7 @@
 <html>
   
   <head>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
     <script type="text/javascript">
       // Global variables.
       var ballX = 150; // Ball x position.
@@ -25,89 +25,6 @@
 
         test();
         test2();
-
-        // Get the canvas element.
-        canvas = document.getElementById("gameBoard");
-
-        // Make sure you got it.
-        if (canvas.getContext) {
-          // Specify 2d canvas type.
-          ctx = canvas.getContext("2d");
-
-          // Play the game until the ball stops.
-          gameLoop = setInterval(drawBall, 16);
-
-          // Add keyboard listener.
-          window.addEventListener('keydown', whatKey, true);
-
-        }
-      }
-
-      function drawBall() {
-
-        // Clear the board.
-        ctx.clearRect(0, 0, boardX, boardY);
-
-        // Fill the board.
-        ctx.fillStyle = "thistle";
-        ctx.beginPath();
-        ctx.rect(0, 0, boardX, boardY);
-        ctx.closePath();
-        ctx.fill();
-
-        // Draw a ball.
-        ctx.fillStyle = "tomato";
-        ctx.beginPath();
-        ctx.arc(ballX, ballY, 15, 0, Math.PI * 2, true);
-        ctx.closePath();
-        ctx.fill();
-
-        // Draw the paddle.
-        ctx.fillStyle = "navy";
-        ctx.beginPath();
-        ctx.rect(paddleX, paddleD, paddleW, paddleH);
-        ctx.closePath();
-        ctx.fill();
-
-        // Change the ball location.
-        ballX += ballDX;
-        ballY += ballDY;
-
-        // Bounce on a left or right edge.
-        if (ballX + ballDX > boardX - 15 || ballX + ballDX < 15) ballDX = -ballDX;
-
-        // If ball hits the top, bounce it. 
-        if (ballY + ballDY < 15) ballDY = -ballDY;
-        // If the ball hits the bottom, check see if it hits a paddle.
-        else if (ballY + ballDY > boardY - 15) {
-          // If the ball hits the paddle, bounce it.
-          if (ballX > paddleX && ballX < paddleX + paddleW) ballDY = -ballDY;
-          // Otherwise the game is over.
-          else {
-            clearInterval(gameLoop);
-            // alert("Game over!");
-          }
-        }
-      }
-
-      // Get key press.
-
-
-      function whatKey(evt) {
-
-        switch (evt.keyCode) {
-          // Left arrow.
-        case 37:
-          paddleX = paddleX - 20;
-          if (paddleX < 0) paddleX = 0;
-          break;
-
-          // Right arrow.
-        case 39:
-          paddleX = paddleX + 20;
-          if (paddleX > boardX - paddleW) paddleX = boardX - paddleW;
-          break;
-        }
       }
 
       function onInviteClickJSON() {
@@ -127,7 +44,7 @@
           body: raw
         };
 
-        fetch("http://localhost:8080/sendInvite", requestOptions)
+        fetch("http://10.10.1.167:8080/sendInvite", requestOptions)
           .then(response => response.text())
           .then(result => console.log(result))
           .catch(error => console.log('error', error));
@@ -148,7 +65,7 @@
     }
   });
 
-  xhr.open("POST", "http://localhost:8080/sendInvite");
+  xhr.open("POST", "http://10.10.1.167:8080/sendInvite");
   xhr.setRequestHeader("Content-Type", "application/json");
 
   xhr.send(data);
@@ -165,15 +82,22 @@
             "web_app_query_id": "aaa"
           });
 
-          fetch("http://localhost:8080/sendInvite", {
+          fetch("http://10.10.1.167:8080/sendInvite", {
             method: 'POST',
             headers: myHeaders,
             body: raw,
             redirect: 'follow'
           })
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+            .then(response => {
+              console.log("RESPONSE: ", response)
+              response.text()
+            })
+            .then(result => {
+              console.log("RESULT: ", result);
+            })
+            .catch(error => {
+              console.log("ERRRRRRRRR: ", error);
+            });
         }
       function test2() {
         var myHeaders = new Headers();
@@ -185,7 +109,7 @@
           redirect: 'follow'
         };
 
-        fetch("http://localhost:8080/test", requestOptions)
+        fetch("http://10.10.1.167:8080/test", requestOptions)
           .then(response => response.text())
           .then(result => console.log(result))
           .catch(error => console.log('error', error));
