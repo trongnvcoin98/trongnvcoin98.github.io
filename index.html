@@ -113,11 +113,13 @@
           // }
           // window.Telegram.WebApp.close();
           const query_id = window.Telegram.WebApp.initDataUnsafe.query_id;
-          const data = {"web_app_query_id" : String(query_id)}
+          // const data = {"web_app_query_id" : String(query_id)}
+          const data = {"web_app_query_id" : "kkkkk"}
           let apiUrl = "http://localhost:8080/sendInvite"
           fetch(apiUrl, {
             method: 'POST',
             headers: {
+              'Conten': 'application/json',
               'Content-Type': 'application/json',
             },
             body: data
