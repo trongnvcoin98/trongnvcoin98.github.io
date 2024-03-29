@@ -112,11 +112,14 @@
           //   query_id: "invite"
           // }
           // window.Telegram.WebApp.close();
+          const query_id = window.Telegram.WebApp.initDataUnsafe.query_id;
+          alert(`QUERY ID: ${query_id}`);
+          const data = {"web_app_query_id" : query_id}
           let apiUrl = "http://localhost:8080/sendInvite"
           fetch(apiUrl, {
             method: 'POST',
             body: {
-              query_id: 'invite_friend'
+              query_id
             }
           })
           .then(response => {
