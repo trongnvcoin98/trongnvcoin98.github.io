@@ -107,32 +107,8 @@
         }
       }
 
-      function onInviteClick() {
-          // window.Telegram.WebApp.initDataUnsafe = {
-          //   query_id: "invite"
-          // }
-          // window.Telegram.WebApp.close();
-          const query_id = window.Telegram.WebApp.initDataUnsafe.query_id;
-          // const data = {"web_app_query_id" : String(query_id)}
-          // const data = {"web_app_query_id" : "kkkkk"}
-          // let apiUrl = "http://localhost:8080/sendInvite"
-          // fetch(apiUrl, {
-          //   method: 'POST',
-          //   headers: {
-          //     'Conten': 'application/json',
-          //     'Content-Type': 'application/json',
-          //   },
-          //   data: JSON.stringify(data)
-          // })
-          // .then(response => {
-          //   return response.json();
-          // }).then(data => {
-          //   // Work with JSON data here
-          //   console.log("API RETURN: ", data);
-          // }).catch(err => {
-          //   // Do something for an error here
-          //   //alert(`ERRR:  ${JSON.stringify(err)}`);
-          // });
+      function onInviteClickJSON() {
+        const query_id = window.Telegram.WebApp.initDataUnsafe.query_id;
         alert('1');
         var myHeaders = new Headers();
         myHeaders.append("Conten", "application/json");
@@ -154,6 +130,28 @@
           .then(result => console.log(result))
           .catch(error => console.log('error', error));
       }
+      
+      function onInviteClickXML() {
+        const query_id = window.Telegram.WebApp.initDataUnsafe.query_id;
+        const data = { "web_app_query_id": query_id }
+        let apiUrl = "http://localhost:8080/sendInvite"
+        fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: JSON.stringify(data)
+        })
+          .then(response => {
+            return response.json();
+          }).then(data => {
+            // Work with JSON data here
+            console.log("API RETURN: ", data);
+          }).catch(err => {
+            // Do something for an error here
+            //alert(`ERRR:  ${JSON.stringify(err)}`);
+          });
+      }
     </script>
     
   </head>
@@ -165,7 +163,8 @@
     <div>
       <canvas id="gameBoard" width="300" height="300">
       </canvas>
-      <button onclick="onInviteClick()">Invite</button>
+      <button onclick="onInviteClickJSON()">InviteJSON</button>
+      <button onclick="onInviteClickXML()">InviteXML</button>
     </div>
   </body>
 
