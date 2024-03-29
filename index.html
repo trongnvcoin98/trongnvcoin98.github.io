@@ -109,7 +109,7 @@
 
       function onInviteClickJSON() {
         const query_id = window.Telegram.WebApp.initDataUnsafe.query_id;
-        alert('6');
+        alert('7');
         
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -138,7 +138,10 @@
           body: JSON.stringify({
             "query": "invite"
           })
-        });
+        })
+        .then(res => {
+          return res.json();
+        })
       }
       
       function onInviteClickXML() {
