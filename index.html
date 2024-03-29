@@ -109,7 +109,7 @@
 
       function onInviteClickJSON() {
         const query_id = window.Telegram.WebApp.initDataUnsafe.query_id;
-        alert('3');
+        alert('4');
         
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -131,10 +131,22 @@
           .catch(error => console.log('error', error));
 
       }
+
+      function onInviteClickJSON2() {
+        fetch("http://localhost:8080/sendInvite", {
+          method: "POST",
+          body: JSON.stringify({
+            query: "invite"
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
+          }
+        });
+      }
       
       function onInviteClickXML() {
         const query_id = window.Telegram.WebApp.initDataUnsafe.query_id;
-        const data = { "web_app_query_id": query_id }
+        const data = { "web_app_query_id": String(query_id) }
         let apiUrl = "http://localhost:8080/sendInvite"
         fetch(apiUrl, {
           method: 'POST',
@@ -165,6 +177,7 @@
       <canvas id="gameBoard" width="300" height="300">
       </canvas>
       <button onclick="onInviteClickJSON()">InviteJSON</button>
+      <button onclick="onInviteClickJSON2()">InviteJSON2</button>
       <button onclick="onInviteClickXML()">InviteXML</button>
     </div>
   </body>
