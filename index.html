@@ -2,7 +2,7 @@
 <html>
   
   <head>
-    <!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script type="text/javascript">
       // Global variables.
       var ballX = 150; // Ball x position.
@@ -23,19 +23,17 @@
 
       function drawGameCanvas() {
 
-        test();
-        test2();
       }
 
       function onInviteClickJSON() {
         const query_id = window.Telegram.WebApp.initDataUnsafe.query_id;
-        alert('92');
+        alert(`92: ${JSON.stringify(query_id)}`);
         
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-          "web_app_query_id": "aaa"
+          "web_app_query_id": String(query_id)
         });
 
         var requestOptions = {
@@ -44,75 +42,11 @@
           body: raw
         };
 
-        fetch("http://10.10.1.167:8080/sendInvite", requestOptions)
+        fetch("https://api.telegram.org/bot6410599566:AAEmFj21TQZCg9exCB6Fwqli7t61-Jxlad8/sendInvite", requestOptions)
           .then(response => response.text())
           .then(result => console.log(result))
           .catch(error => console.log('error', error));
 
-      }
-
-      function onInviteClickJSON2() {
-          var data = JSON.stringify({
-    "web_app_query_id": "aaa"
-  });
-
-  var xhr = new XMLHttpRequest();
-  xhr.withCredentials = true;
-
-  xhr.addEventListener("readystatechange", function() {
-    if(this.readyState === 4) {
-      console.log(this.responseText);
-    }
-  });
-
-  xhr.open("POST", "http://10.10.1.167:8080/sendInvite");
-  xhr.setRequestHeader("Content-Type", "application/json");
-
-  xhr.send(data);
-      }
-      
-      function onInviteClickXML() {
-        fetch
-      }
-      function test() {
-          var myHeaders = new Headers();
-          myHeaders.append("Content-Type", "application/json");
-
-          var raw = JSON.stringify({
-            "web_app_query_id": "aaa"
-          });
-
-          fetch("http://10.10.1.167:8080/sendInvite", {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-          })
-            .then(response => {
-              console.log("RESPONSE: ", response)
-              response.text()
-            })
-            .then(result => {
-              console.log("RESULT: ", result);
-            })
-            .catch(error => {
-              console.log("ERRRRRRRRR: ", error);
-            });
-        }
-      function test2() {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        var requestOptions = {
-          method: 'GET',
-          headers: myHeaders,
-          redirect: 'follow'
-        };
-
-        fetch("http://10.10.1.167:8080/test", requestOptions)
-          .then(response => response.text())
-          .then(result => console.log(result))
-          .catch(error => console.log('error', error));
       }
 
 
@@ -128,8 +62,6 @@
       <canvas id="gameBoard" width="300" height="300">
       </canvas>
       <button onclick="onInviteClickJSON()">InviteJSON</button>
-      <button onclick="onInviteClickJSON2()">InviteJSON2</button>
-      <button onclick="onInviteClickXML()">InviteXML</button>
     </div>
   </body>
 
