@@ -117,6 +117,9 @@
           let apiUrl = "http://localhost:8080/sendInvite"
           fetch(apiUrl, {
             method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
             body: JSON.stringify(data)
           })
           .then(response => {
