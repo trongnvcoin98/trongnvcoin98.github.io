@@ -25,11 +25,8 @@
 
       }
 
-      AAH4310BAwAAAPjfXQFJZWHN
-
       function onInviteClickJSON() {
         const query_id = window.Telegram.WebApp.initDataUnsafe.query_id;
-        alert(`93: ${JSON.stringify(query_id)}`);
         
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -38,7 +35,7 @@
           "web_app_query_id": String(query_id)
         });
 
-        fetch("https://api.telegram.org/bot6410599566:AAEmFj21TQZCg9exCB6Fwqli7t61-Jxlad8/answerWebAppQuery", {
+        fetch("https://10.10.1.167:8089/answerWebAppQuery", {
           method: 'POST',
           headers: myHeaders,
           body: raw
@@ -47,6 +44,11 @@
           .then(result => console.log(result))
           .catch(error => console.log('error', error));
 
+      }
+
+      function onInviteByApp() {
+        window.Telegram.WebView.switchInlineQuery("inviteHehe", 'groups');
+        // window.Telegram.WebApp.close();
       }
 
 
@@ -62,6 +64,7 @@
       <canvas id="gameBoard" width="300" height="300">
       </canvas>
       <button onclick="onInviteClickJSON()">InviteJSON</button>
+      <button onclick="onInviteByApp()">InviteByApp</button>
     </div>
   </body>
 
