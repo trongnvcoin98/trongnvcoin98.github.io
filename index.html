@@ -69,6 +69,7 @@
 <script type="text/javascript">
   function onTelegramAuth(user) {
     alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
+    document.getElementById("logE").innerText = JSON.stringify(user);
   }
 </script>
     
@@ -85,6 +86,7 @@
       <button onclick="OpenTele()">OPEN00000</button>
       <button onclick="AuthenTele()">AUTHEN</button>
       <button onclick="onTelegramAuth()">TEleAuthen1</button>
+      <p id="logE"></p>
     </div>
   </body>
 
