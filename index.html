@@ -69,6 +69,8 @@
 <script type="text/javascript">
   function onTelegramAuth(user) {
     alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
+    console.log('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
+    console.log("USER: " + user);
     document.getElementById("logE").innerText = JSON.stringify(user);
   }
 </script>
