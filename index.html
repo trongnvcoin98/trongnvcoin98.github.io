@@ -1,95 +1,63 @@
 <!DOCTYPE html>
 <html>
-  
-  <head>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://telegram.org/js/telegram-widget.js"></script>
-    <script type="text/javascript">
-      // Global variables.
-      var ballX = 150; // Ball x position.
-      var ballY = 150; // Ball y position.
-      var ballDX = 2; // Change in ball x position.
-      var ballDY = 4; // Change in ball y position.
-      var boardX = 300; // Board width.
-      var boardY = 300; // Board height.
-      var paddleX = 150; // Initial paddle location.
-      var paddleH = 10; // Paddle height.
-      var paddleD = boardY - paddleH; // Paddle depth.
-      var paddleW = 150; // Paddle width.
-      var canvas; // Canvas element.
-      var ctx; // Canvas context.
-      var gameLoop; // Game loop time interval.
-      // This function is called on page load.
+<head>
+  <meta charset="utf-8">
 
+  <title>Cocos Creator | Caro</title>
 
-      function drawGameCanvas() {
+  <!--http://www.html5rocks.com/en/mobile/mobifying/-->
+  <meta name="viewport"
+        content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1,minimal-ui=true"/>
 
-      }
+  <!--https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
 
-      function InitTele() {
-        window.Telegram.Login.init();
-      }
-      function OpenTele() {
-        window.Telegram.Login.open("C98WebGameBot");
-      }
-      function AuthenTele() {
-        window.Telegram.Login.auth();
-      }
+  <!-- force webkit on 360 -->
+  <meta name="renderer" content="webkit"/>
+  <meta name="force-rendering" content="webkit"/>
+  <!-- force edge on IE -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="msapplication-tap-highlight" content="no">
 
-      function onInviteClickJSON() {
-        const query_id = window.Telegram.WebApp.initDataUnsafe.query_id;
-        
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
+  <!-- force full screen on some browser -->
+  <meta name="full-screen" content="yes"/>
+  <meta name="x5-fullscreen" content="true"/>
+  <meta name="360-fullscreen" content="true"/>
 
-        var raw = JSON.stringify({
-          "web_app_query_id": String(query_id)
-        });
+  <!--fix fireball/issues/3568 -->
+  <!--<meta name="browsermode" content="application">-->
+  <meta name="x5-page-mode" content="app">
 
-        fetch("https://10.10.2.82:8088/answerWebAppQuery", {
-          method: 'POST',
-          headers: myHeaders,
-          body: raw
-        })
-          .then(response => response.text())
-          .then(result => console.log(result))
-          .catch(error => console.log('error', error));
+  <!--<link rel="apple-touch-icon" href=".png" />-->
+  <!--<link rel="apple-touch-icon-precomposed" href=".png" />-->
 
-      }
+  <link rel="stylesheet" type="text/css" href="style.css"/>
 
-      function onInviteByApp() {
-        window.Telegram.WebView.switchInlineQuery("inviteHehe", 'groups');
-        // window.Telegram.WebApp.close();
-      }
-
-
-    </script>
-
-<script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-login="C98WebGameBot" data-size="large" data-onauth="onTelegramAuth(user)"></script>
-<script type="text/javascript">
-  function onTelegramAuth(user) {
-    alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
-    console.log('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
-    console.log("USER: " + user);
-    document.getElementById("logE").innerText = JSON.stringify(user);
-  }
-</script>
-    
-  </head>
-  
-  <body onload="drawGameCanvas()">
-    <h1>
-      Canvas Racquetball2
-    </h1>
-    <div>
-      <canvas id="gameBoard" width="300" height="300">
-      </canvas>
-      <button onclick="InitTele()">INitdddd3333</button>
-      <button onclick="OpenTele()">OPEN00000</button>
-      <button onclick="AuthenTele()">AUTHEN</button>
-      <button onclick="onTelegramAuth()">TEleAuthen2</button>
-      <p id="logE"></p>
+</head>
+<body>
+  <div id="GameDiv" cc_exact_fit_screen="true">
+      <div id="Cocos3dGameContainer">
+        <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="99"></canvas>
+      </div>
     </div>
-  </body>
+  
 
+<!-- Polyfills bundle. -->
+
+<script src="src/polyfills.bundle.js" charset="utf-8"> </script>
+
+
+<!-- SystemJS support. -->
+<script src="src/system.bundle.js" charset="utf-8"> </script>
+
+<!-- Import map -->
+<script src="src/import-map.json" type="systemjs-importmap" charset="utf-8"> </script>
+
+<script>
+    System.import('./index.js').catch(function(err) { console.error(err); })
+</script>
+
+</body>
 </html>
